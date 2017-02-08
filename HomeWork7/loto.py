@@ -56,3 +56,36 @@
 модуль random: http://docs.python.org/3/library/random.html
 
 """
+
+import random
+
+class Loto:
+
+    def __init__(self, data):
+        self.data = data
+        self.index = len(self.data)
+
+    def gen_ticket(*resh):
+        ''' Генерируем 2 билета: 1 для компьютера и 1 для пользователя и выводим на экран
+        '''
+        resh = list(resh)
+        s1 = [[],[],[]]
+        s2 = [[],[],[]]
+        t = [] # Заносим числа, которые уже были сгенерированы ранее
+        for i in range(3):
+            for j in range(5):
+                pass
+            s1[i].sort()
+        print(resh)
+        # print(num)
+        return s1
+
+    def bochonok(self):
+        ''' Генерируем случайный номер бочёнка и выводим на экран
+        '''
+        pass
+
+    def __del__(self):
+        pass
+
+print(Loto.gen_ticket())

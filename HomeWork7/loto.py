@@ -83,12 +83,38 @@ class Loto:
         #     print()
         return s1
 
-    def print_ticket(ticket1):
-        # ticket1 = list(ticket1)
+    def print_ticket(ticket):
         for i in range(3):
             for j in range(5):
-                print(ticket1[i][j], end='  ')
+                print(ticket[i][j], end='  ')
             print()
+
+    def bochonok(list1):
+        ''' Генерируем случайный номер доставаемого бочонка и выводим на экран
+            номер выпавшего бочонка и оставшиеся ходы. На вход подаётся список
+            с выпавшими числами.
+        '''
+        p1 = random.randint(1, 90)
+        while p1 in list1:
+            p1 = random.randint(1, 90)
+        list1.append(p1)
+        return p1
+
+    def pick_tiket(num, ticket, select):
+        ''' Функция сверяет выпавший номер с номерами в билете
+        '''
+        for i in range(3):
+            for j in range(5):
+                if num == ticket[i][j] and (select == 'да' or select == 'комп'):
+                    ticket[i][j] = '-'
+                    return 1
+                elif num == ticket[i][j] and select == 'нет':
+                    ticket[i][j] = '-'
+                    return 3
+        if num not in ticket:
+            return 0
+
+
 
     def gen_ticket(*resh):
         ''' Генерируем 2 билета: 1 для компьютера и 1 для пользователя и выводим на экран
@@ -120,19 +146,6 @@ class Loto:
                 print(s1[i][j], end='  ')
             print()
         # return  s1
-
-    # def bochonok():
-    #     ''' Генерируем случайный номер доставаемого бочонка и выводим на экран
-    #     '''
-    #
-    #     p1 = random.randint(1, 90)
-    #     while p1 in gen_ticket.t1:
-    #         p1 = random.randint(1, 90)
-    #     gen_ticket.t1.append(p1)
-    #     return p1
-
-    def __del__(self):
-        pass
 
 # print(Loto.gen_ticket(0,1,0))
 # Loto.gen_ticket(0,1,0)

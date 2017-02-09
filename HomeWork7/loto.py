@@ -60,32 +60,88 @@
 import random
 
 class Loto:
-
     def __init__(self, data):
+        t1 = []
         self.data = data
         self.index = len(self.data)
 
-    def gen_ticket(*resh):
-        ''' Генерируем 2 билета: 1 для компьютера и 1 для пользователя и выводим на экран
-        '''
-        resh = list(resh)
-        s1 = [[],[],[]]
-        s2 = [[],[],[]]
-        t = [] # Заносим числа, которые уже были сгенерированы ранее
+    def generate():
+        s1 = [[], [], []]
+        t = []  # Заносим числа, которые уже были сгенерированы ранее
         for i in range(3):
             for j in range(5):
-                pass
+                p = 0
+                p = random.randint(1, 90)
+                while p in t:
+                    p = random.randint(1, 90)
+                s1[i].append(p)
+                t.append(p)
             s1[i].sort()
-        print(resh)
-        # print(num)
+        # for i in range(3):
+        #     for j in range(5):
+        #         print(s1[i][j], end='  ')
+        #     print()
         return s1
 
-    def bochonok(self):
-        ''' Генерируем случайный номер бочёнка и выводим на экран
+    def print_ticket(ticket1):
+        # ticket1 = list(ticket1)
+        for i in range(3):
+            for j in range(5):
+                print(ticket1[i][j], end='  ')
+            print()
+
+    def gen_ticket(*resh):
+        ''' Генерируем 2 билета: 1 для компьютера и 1 для пользователя и выводим на экран
+            В переменную *resh подаются 3 числа: выпавший номер бочонка, ответ игрока (да / нет) и
+            номер хода.
         '''
-        pass
+        resh = list(resh)
+        p1 = random.randint(1, 90)
+        if resh[2] == 0:
+            s1 = [[], [], []]
+            s2 = [[], [], []]
+            t = []  # Заносим числа, которые уже были сгенерированы ранее
+            t1 = []
+            for i in range(3):
+                for j in range(5):
+                    p = 0
+                    p = random.randint(1, 90)
+                    while p in t:
+                        p = random.randint(1, 90)
+                    s1[i].append(p)
+                    t.append(p)
+                s1[i].sort()
+        # print(resh)
+        # print(num)
+        print('Новый бачонок: ', resh[0], 'осталось: ', 90 - resh[2])
+        print('------ Ваша карточка -----')
+        for i in range(3):
+            for j in range(5):
+                print(s1[i][j], end='  ')
+            print()
+        # return  s1
+
+    # def bochonok():
+    #     ''' Генерируем случайный номер доставаемого бочонка и выводим на экран
+    #     '''
+    #
+    #     p1 = random.randint(1, 90)
+    #     while p1 in gen_ticket.t1:
+    #         p1 = random.randint(1, 90)
+    #     gen_ticket.t1.append(p1)
+    #     return p1
 
     def __del__(self):
         pass
 
-print(Loto.gen_ticket())
+# print(Loto.gen_ticket(0,1,0))
+# Loto.gen_ticket(0,1,0)
+# print(Loto.bochonok(0,1,0))
+# Loto.generate()
+# print()
+bil1 = Loto.generate()
+bil2 = Loto.generate()
+# print(bil1)
+Loto.print_ticket(bil1)
+print()
+Loto.print_ticket(bil2)

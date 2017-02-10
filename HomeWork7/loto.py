@@ -61,7 +61,6 @@ import random
 
 class Loto:
     def __init__(self, data):
-        t1 = []
         self.data = data
         self.index = len(self.data)
 
@@ -77,10 +76,6 @@ class Loto:
                 s1[i].append(p)
                 t.append(p)
             s1[i].sort()
-        # for i in range(3):
-        #     for j in range(5):
-        #         print(s1[i][j], end='  ')
-        #     print()
         return s1
 
     def print_ticket(ticket):
@@ -108,53 +103,59 @@ class Loto:
                 if num == ticket[i][j] and (select == 'да' or select == 'комп'):
                     ticket[i][j] = '-'
                     return 1
-                elif num == ticket[i][j] and select == 'нет':
+                if num == ticket[i][j] and select == 'нет':
                     ticket[i][j] = '-'
+                    print('Вы проиграли! Бочонок номер', num,'есть в Вашем билете.')
                     return 3
-        if num not in ticket:
+        if num not in ticket and select == 'да' and select != 'комп':
+            print('Вы проиграли! Бочонка номер', num, 'нет в Вашем билете.')
             return 0
 
-
-
-    def gen_ticket(*resh):
-        ''' Генерируем 2 билета: 1 для компьютера и 1 для пользователя и выводим на экран
-            В переменную *resh подаются 3 числа: выпавший номер бочонка, ответ игрока (да / нет) и
-            номер хода.
+    def vin(ticket):
+        ''' Функция проверяет зачеркнуты ли все числа в билете.
         '''
-        resh = list(resh)
-        p1 = random.randint(1, 90)
-        if resh[2] == 0:
-            s1 = [[], [], []]
-            s2 = [[], [], []]
-            t = []  # Заносим числа, которые уже были сгенерированы ранее
-            t1 = []
-            for i in range(3):
-                for j in range(5):
-                    p = 0
-                    p = random.randint(1, 90)
-                    while p in t:
-                        p = random.randint(1, 90)
-                    s1[i].append(p)
-                    t.append(p)
-                s1[i].sort()
-        # print(resh)
-        # print(num)
-        print('Новый бачонок: ', resh[0], 'осталось: ', 90 - resh[2])
-        print('------ Ваша карточка -----')
+        key = 0
         for i in range(3):
             for j in range(5):
-                print(s1[i][j], end='  ')
-            print()
-        # return  s1
+                if ticket[i][j] == '-':
+                    key += 1
+                    if key == 15:
+                        # print('key ', key)
+                        return 777
 
-# print(Loto.gen_ticket(0,1,0))
-# Loto.gen_ticket(0,1,0)
-# print(Loto.bochonok(0,1,0))
-# Loto.generate()
-# print()
+# Код тела игры
+print('Добро пожаловать и игру Лото!')
+# start = input('Начинаем игру? (да | нет):')
 bil1 = Loto.generate()
 bil2 = Loto.generate()
-# print(bil1)
-Loto.print_ticket(bil1)
-print()
-Loto.print_ticket(bil2)
+l = [] # список для накопления выпавших номеров бачонков
+for i in range(90):
+    print('Новый бочонок:', Loto.bochonok(l), '(осталось ', 90 - len(l),')')
+
+    print('------ Ваша карточка -----')
+    Loto.print_ticket(bil1)
+    print('--------------------------')
+    print('--- Карточка компьютера---')
+    Loto.print_ticket(bil2)
+    print('--------------------------')
+
+    vibor = input('Зачеркнуть цифру? (да | нет):')
+    while vibor != 'да' and vibor != 'нет':
+        print('Вы сделали неправильный выбор!')
+        vibor = input('Зачеркнуть цифру? (да | нет):')
+    print()
+    v1 = Loto.pick_tiket(l[i], bil1, vibor)
+    v2 = Loto.pick_tiket(l[i], bil2, 'комп')
+    vv1 = Loto.vin(bil1)
+    vv2 = Loto.vin(bil2)
+    if v1 == 3 or v1 == 0:
+        break
+    if vv1 == 777 and vv2 != 777:
+        print('Поздравляем! Вы выиграли.')
+        break
+    elif vv1 == 777 and vv2 == 777:
+        print('Ничья! Обе карточки были заполнены одновременно')
+        break
+    elif vv1 != 777 and vv2 == 777:
+        print('Вы проиграли! Карточка компьютера была заполнена быстрее')
+        break
